@@ -5,32 +5,36 @@
 
 :custom
 clear custom_choice
-menu This is a Test Menu
-item --gap This is the first sub menu
-item option_one ${space} Loading a kernel and initrd
-item option_two ${space} Loading an ISO
-item --gap This is a second sub menu
-item option_three ${space} Loads another custom sub menu
-item option_four ${space} This is option four
+menu Lajci Menu
+item --gap AGS
+item option_one ${space} Stelec
+item option_two ${space} Win10
+item option_three ${space} Ubuntu server 24.04.2
+item option_four ${space} HyperV 2019
 choose custom_choice || goto custom_exit
 echo ${cls}
 goto ${custom_choice}
 goto custom_exit
 
 :option_one
-kernel http://path.to/vmlinuz
-initrd http://path.to/initrd
-imgargs vmlinuz put_kernel_img_args_here
+kernel https://boot.netboot.xyz/memdisk raw iso
+initrd http://10.0.10.10/WinPE11_10_Sergei_Strelec_x64_2025.05.22_English.iso
 boot || goto custom_exit
 
 :option_two
 kernel https://boot.netboot.xyz/memdisk raw iso
-initrd http://46.36.40.48/iso/strelec.iso
+initrd http://10.0.10.10/Win10_22H2_Slovak_x64.iso
 boot || goto custom_exit
 
 :option_three
-echo Chains into another menu...
-chain https://raw.githubusercontent.com/${github_user}/netboot.xyz-custom/master/custom1.ipxe || goto custom
+kernel https://boot.netboot.xyz/memdisk raw iso
+initrd http://10.0.10.10/ubuntu-24.04.2-live-server-amd64.iso
+boot || goto custom_exit
+
+:option_four
+kernel https://boot.netboot.xyz/memdisk raw iso
+initrd http://10.0.10.10/17763.737.190906-2324.rs5_release_svc_refresh_SERVERHYPERCORE_OEM_x64FRE_en-us_1.iso
+boot || goto custom_exit
 
 :custom_exit
 chain utils.ipxe
